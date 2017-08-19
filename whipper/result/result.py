@@ -66,8 +66,10 @@ class TrackResult:
     testcrc = None
     copycrc = None
     accurip = False  # whether it's in the database
-    ARCRC = None
-    ARDBCRC = None
+    ARCRC1 = None
+    ARCRC2 = None
+    ARDBCRC1 = None
+    ARDBCRC2 = None
     ARDBConfidence = None
     ARDBMaxConfidence = None
 

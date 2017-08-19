@@ -60,16 +60,18 @@ class FastAccurateRipChecksumTask(etask.Task):
         self.trackCount = trackCount
         self._wave = wave
         self._v2 = v2
-        self.checksum = None
+        self.checksumAR1 = None
+        self.checksumAR2 = None
 
     def start(self, runner):
         etask.Task.start(self, runner)
         self.schedule(0.0, self._arc)
 
     def _arc(self):
-        arc = accuraterip_checksum(self.path, self.trackNumber,
+        arChecksums = accuraterip_checksum(self.path, self.trackNumber,
                                    self.trackCount,
                                    self._wave, self._v2)
-        self.checksum = arc
+        self.checksumAR1 = arChecksums[0]
+        self.checksumAR2 = arChecksums[1]
 
         self.stop()

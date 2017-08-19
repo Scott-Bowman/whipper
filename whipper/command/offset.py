@@ -215,7 +215,7 @@ CD in the AccurateRip database."""
         runner.run(t)
 
         os.unlink(path)
-        return "%08x" % t.checksum
+        return "%08x" % t.checksumAR1
 
     def _foundOffset(self, device, offset):
         sys.stdout.write('\nRead offset of device is: %d.\n' %

@@ -596,13 +596,18 @@ class Program:
         runner.run(verifytask)
         runner.run(cuetask)
 
-        self._verifyImageWithChecksums(responses, cuetask.checksums)
+        self._verifyImageWithChecksums(responses, cuetask.checksumsAR1, cuetask.checksumsAR2)
 
-    def _verifyImageWithChecksums(self, responses, checksums):
+    def _verifyImageWithChecksums(self, responses, checksumsAR1, checksumsAR2):
         # loop over tracks to set our calculated AccurateRip CRC's
-        for i, csum in enumerate(checksums):
+
+        for i, csum in enumerate(checksumsAR1):
             trackResult = self.result.getTrackResult(i + 1)
-            trackResult.ARCRC = csum
+            trackResult.ARCRC1 = csum
+
+        for i, csum in enumerate(checksumsAR2):
+            trackResult = self.result.getTrackResult(i + 1)
+            trackResult.ARCRC2 = csum
 
         if not responses:
             logger.warning('No AccurateRip responses, cannot verify.')

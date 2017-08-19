@@ -121,7 +121,8 @@ class AccurateRipChecksumTask(task.MultiSeparateTask):
 
         self._image = image
         cue = image.cue
-        self.checksums = []
+        self.checksumsAR1 = []
+        self.checksumsAR2 = []
 
         logger.debug('Checksumming %d tracks' % len(cue.table.tracks))
         for trackIndex, track in enumerate(cue.table.tracks):
@@ -145,7 +146,8 @@ class AccurateRipChecksumTask(task.MultiSeparateTask):
             self.addTask(checksumTask)
 
     def stop(self):
-        self.checksums = [t.checksum for t in self.tasks]
+        self.checksumsAR1 = [t.checksumAR1 for t in self.tasks]
+        self.checksumsAR2 = [t.checksumAR2 for t in self.tasks]
         task.MultiSeparateTask.stop(self)
 
 
