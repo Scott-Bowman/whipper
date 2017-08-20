@@ -614,7 +614,7 @@ class Program:
             return
 
         # now loop to match responses
-        for i, csum in enumerate(checksums):
+        for i, csum in enumerate(checksumsAR1):
             trackResult = self.result.getTrackResult(i + 1)
 
             confidence = None
@@ -630,7 +630,7 @@ class Program:
                         i + 1, j + 1, len(responses))
                     trackResult.accurip = True
                     # FIXME: maybe checksums should be ints
-                    trackResult.ARDBCRC = int(r.checksums[i], 16)
+                    trackResult.ARDBCRC1 = int(r.checksums[i], 16)
                     # arsum = csum
                     confidence = r.confidences[i]
                     trackResult.ARDBConfidence = confidence
