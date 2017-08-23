@@ -605,7 +605,9 @@ Log files will log the path to tracks relative to this directory.
         self.program.verifyImage(self.runner, responses)
 
         sys.stdout.write("\n".join(
-            self.program.getAccurateRipResults()) + "\n")
+            self.program.getAccurateRipResults(1)) + "\n")
+        sys.stdout.write("\n".join(
+            self.program.getAccurateRipResults(2)) + "\n")
 
         self.program.saveRipResult()
 

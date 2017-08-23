@@ -137,20 +137,13 @@ class AccurateRipChecksumTask(task.MultiSeparateTask):
 
             path = image.getRealPath(index.path)
 
-            checksumTaskV1 = checksum.FastAccurateRipChecksumTask(
+            checksumTask = checksum.FastAccurateRipChecksumTask(
                                 path,
                                 trackNumber=trackIndex + 1,
                                 trackCount=len(cue.table.tracks),
                                 wave=True, v2=False)
 
-            checksumTaskV2 = checksum.FastAccurateRipChecksumTask(
-                                path,
-                                trackNumber=trackIndex + 1,
-                                trackCount=len(cue.table.tracks),
-                                wave=True, v2=True)
-
-            self.addTask(checksumTaskV1)
-            self.addTask(checksumTaskV2)
+            self.addTask(checksumTask)
 
     def stop(self):
         self.checksumsAR1 = [t.checksumAR1 for t in self.tasks]

@@ -35,16 +35,16 @@ class TrackResult:
                              accurately ripped.
                              If false, it can be ripped wrong, not exist in
                              the database, ...
-    @type accurip:           bool
+    @type accurip:           dict
 
     @var  ARCRC:             our calculated 4 byte AccurateRip CRC for this
                              track.
-    @type ARCRC:             int
+    @type ARCRC:             dict
 
     @var  ARDBCRC:           the 4-byte AccurateRip CRC this
                              track did or should have matched in the database.
                              If None, the track is not in the database.
-    @type ARDBCRC:           int
+    @type ARDBCRC:           dict
     @var  ARDBConfidence:    confidence for the matched AccurateRip CRC for
                              this track in the database.
                              If None, the track is not in the database.
@@ -65,13 +65,11 @@ class TrackResult:
     copyduration = 0.0
     testcrc = None
     copycrc = None
-    accurip = False  # whether it's in the database
-    ARCRC1 = None
-    ARCRC2 = None
-    ARDBCRC1 = None
-    ARDBCRC2 = None
-    ARDBConfidence = None
-    ARDBMaxConfidence = None
+    accurip = {1: False, 2: False}  # whether it's in the database
+    ARCRC = {1: None, 2: None}
+    ARDBCRC = {1: None, 2: None}
+    ARDBConfidence = {1: None, 2: None}
+    ARDBMaxConfidence = {1: None, 2: None}
 
     classVersion = 3
 

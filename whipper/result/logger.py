@@ -206,15 +206,15 @@ class WhipperLogger(result.Logger):
         if trackResult.accurip:
             lines.append("    AccurateRip V1:")
             self._inARDatabase += 1
-            if trackResult.ARCRC == trackResult.ARDBCRC:
+            if trackResult.ARCRC[1] == trackResult.ARDBCRC[1]:
                 lines.append("      Result: Found, exact match")
                 self._accuratelyRipped += 1
             else:
                 lines.append("      Result: Found, NO exact match")
             lines.append("      Confidence: %d" %
                          trackResult.ARDBConfidence)
-            lines.append("      Local CRC: %08X" % trackResult.ARCRC)
-            lines.append("      Remote CRC: %08X" % trackResult.ARDBCRC)
+            lines.append("      Local CRC: %08X" % trackResult.ARCRC[1])
+            lines.append("      Remote CRC: %08X" % trackResult.ARDBCRC[2])
         elif trackResult.number != 0:
             lines.append("    AccurateRip V1:")
             lines.append("      Result: Track not present in "
