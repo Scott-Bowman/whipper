@@ -603,6 +603,7 @@ class Program:
 
         for i, csum in enumerate(checksumsAR1):
             trackResult = self.result.getTrackResult(i + 1)
+            print trackResult.ARCRC
             trackResult.ARCRC[1] = csum
 
         self.matchResponses(responses, checksumsAR1, 1)
