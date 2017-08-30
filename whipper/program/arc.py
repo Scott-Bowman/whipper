@@ -37,9 +37,7 @@ def accuraterip_checksum(f, track, tracks, wave=False, v2=False):
         flac.wait()
         flac_rc = flac.returncode
 
-    print "Calculating ARv1"
     arc_rc1 = arc1.returncode
-    print "Calculating ARv2"
     arc_rc2 = arc2.returncode
 
     if not wave and flac_rc != 0:

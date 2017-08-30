@@ -600,19 +600,19 @@ class Program:
 
     def _verifyImageWithChecksums(self, responses, checksumsAR1, checksumsAR2):
         # loop over tracks to set our calculated AccurateRip CRC's
-
         for i, csum in enumerate(checksumsAR1):
             trackResult = self.result.getTrackResult(i + 1)
-            print trackResult.ARCRC
             trackResult.ARCRC[1] = csum
+            print ("trackResult.ARCRC[1] %d: ") % i + ("%08x" % trackResult.ARCRC[1])
 
         self.matchResponses(responses, checksumsAR1, 1)
 
         for i, csum in enumerate(checksumsAR2):
             trackResult = self.result.getTrackResult(i + 1)
             trackResult.ARCRC[2] = csum
+            print ("trackResult.ARCRC[2] %d: " % i) + ("%08x" % trackResult.ARCRC[2])
 
-        self.matchResponses(responses, checksumsAR1, 2)
+        self.matchResponses(responses, checksumsAR2, 2)
 
         if not responses:
             logger.warning('No AccurateRip responses, cannot verify.')
@@ -628,6 +628,7 @@ class Program:
 
             # match against each response's checksum for this track
             for j, r in enumerate(responses):
+                print ("%08x" % csum) + " == " + str(r.checksums[i])
                 if "%08x" % csum == r.checksums[i]:
                     response = r
                     logger.debug(
@@ -637,11 +638,8 @@ class Program:
                     trackResult.accurip[v] = True
                     confidence = r.confidences[i]
                     # FIXME: maybe checksums should be ints
-
                     trackResult.ARDBCRC[v] = int(r.checksums[i], 16)
                     trackResult.ARDBConfidence[v] = confidence
-
-                    # arsum = csum
 
             if not trackResult.accurip[v]:
                 logger.warning("Track %02d: not matched in "
@@ -658,6 +656,7 @@ class Program:
 
             logger.debug('Track %02d: found max confidence %d' % (
                 i + 1, maxConfidence))
+            trackResult.ARDBMaxConfidence[v] = maxConfidence
 
             if not response:
                 logger.warning('Track %02d: none of the responses matched.',
@@ -676,9 +675,11 @@ class Program:
 
         # loop over tracks
         for i, trackResult in enumerate(self.result.tracks):
+            print ("trackResult.ARCRC[v] %d: " % i) + str(trackResult.ARCRC[v])
+            print ("trackResult.ARDBCRC[v] %d: " % i) + str(trackResult.ARDBCRC[v])
             status = 'rip NOT accurate'
 
-            if trackResult.accurip:
+            if trackResult.accurip[v]:
                 status = 'rip accurate    '
 
             # TODO: update for ARv2
@@ -686,7 +687,7 @@ class Program:
             ar = ", DB [notfound]"
             if trackResult.ARDBMaxConfidence[v]:
                 c = "(max confidence    %3d)" % trackResult.ARDBMaxConfidence[v]
-                if trackResult.ARDBConfidence[v]:
+                if trackResult.ARDBConfidence[v] is not None:
                     if trackResult.ARDBConfidence[v] \
                             < trackResult.ARDBMaxConfidence[v]:
                         c = "(confidence %3d of %3d)" % (

@@ -202,23 +202,8 @@ class WhipperLogger(result.Logger):
             lines.append("    Copy CRC: %08X" % trackResult.copycrc)
 
         # AccurateRip track status
-        # Currently there's no support for AccurateRip V2
-        if trackResult.accurip:
-            lines.append("    AccurateRip V1:")
-            self._inARDatabase += 1
-            if trackResult.ARCRC[1] == trackResult.ARDBCRC[1]:
-                lines.append("      Result: Found, exact match")
-                self._accuratelyRipped += 1
-            else:
-                lines.append("      Result: Found, NO exact match")
-            lines.append("      Confidence: %d" %
-                         trackResult.ARDBConfidence)
-            lines.append("      Local CRC: %08X" % trackResult.ARCRC[1])
-            lines.append("      Remote CRC: %08X" % trackResult.ARDBCRC[2])
-        elif trackResult.number != 0:
-            lines.append("    AccurateRip V1:")
-            lines.append("      Result: Track not present in "
-                         "AccurateRip database")
+        self.accuRipTrackStatus(trackResult, lines, 1)
+        self.accuRipTrackStatus(trackResult, lines, 2)
 
         # Check if Test & Copy CRCs are equal
         if trackResult.testcrc == trackResult.copycrc:
@@ -227,3 +212,22 @@ class WhipperLogger(result.Logger):
             self._errors = True
             lines.append("    Status: Error, CRC mismatch")
         return lines
+
+    def accuRipTrackStatus(self, trackResult, lines, arVrsn):
+        # AccurateRip track status
+        if trackResult.accurip:
+            lines.append("    AccurateRip V%d:" % arVrsn)
+            self._inARDatabase += 1
+            if trackResult.ARCRC[arVrsn] == trackResult.ARDBCRC[arVrsn]:
+                lines.append("      Result: Found, exact match")
+                self._accuratelyRipped += 1
+            else:
+                lines.append("      Result: Found, NO exact match")
+            lines.append("      Confidence: %d" %
+                         trackResult.ARDBConfidence[arVrsn])
+            lines.append("      Local CRC: %08X" % trackResult.ARCRC[arVrsn])
+            lines.append("      Remote CRC: %08X" % trackResult.ARDBCRC[arVrsn])
+        elif trackResult.number != 0:
+            lines.append("    AccurateRip V%d:" % arVrsn)
+            lines.append("      Result: Track not present in "
+                         "AccurateRip database")
