@@ -215,7 +215,7 @@ class WhipperLogger(result.Logger):
 
     def accuRipTrackStatus(self, trackResult, lines, arVrsn):
         # AccurateRip track status
-        if trackResult.accurip:
+        if trackResult.accurip[arVrsn]:
             lines.append("    AccurateRip V%d:" % arVrsn)
             self._inARDatabase += 1
             if trackResult.ARCRC[arVrsn] == trackResult.ARDBCRC[arVrsn]:

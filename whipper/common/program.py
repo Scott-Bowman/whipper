@@ -596,33 +596,22 @@ class Program:
         runner.run(verifytask)
         runner.run(cuetask)
 
-        self._verifyImageWithChecksums(responses, cuetask.checksumsAR1, cuetask.checksumsAR2)
+        self._verifyImageWithChecksums(responses, cuetask.checksumsAR1, 1)
+        self._verifyImageWithChecksums(responses, cuetask.checksumsAR2, 2)
 
-    def _verifyImageWithChecksums(self, responses, checksumsAR1, checksumsAR2):
+    def _verifyImageWithChecksums(self, responses, checksums, v):
         # loop over tracks to set our calculated AccurateRip CRC's
-        for i, csum in enumerate(checksumsAR1):
+        for i, csum in enumerate(checksums):
             trackResult = self.result.getTrackResult(i + 1)
-            trackResult.ARCRC[1] = csum
-            print ("trackResult.ARCRC[1] %d: ") % i + ("%08x" % trackResult.ARCRC[1])
-
-        self.matchResponses(responses, checksumsAR1, 1)
-
-        for i, csum in enumerate(checksumsAR2):
-            trackResult = self.result.getTrackResult(i + 1)
-            trackResult.ARCRC[2] = csum
-            print ("trackResult.ARCRC[2] %d: " % i) + ("%08x" % trackResult.ARCRC[2])
-
-        self.matchResponses(responses, checksumsAR2, 2)
+            trackResult.ARCRC[v] = csum
 
         if not responses:
             logger.warning('No AccurateRip responses, cannot verify.')
             return
 
-    def matchResponses(self, responses, checksums, v):
         # now loop to match responses
         for i, csum in enumerate(checksums):
             trackResult = self.result.getTrackResult(i + 1)
-
             confidence = None
             response = None
 
@@ -675,8 +664,6 @@ class Program:
 
         # loop over tracks
         for i, trackResult in enumerate(self.result.tracks):
-            print ("trackResult.ARCRC[v] %d: " % i) + str(trackResult.ARCRC[v])
-            print ("trackResult.ARDBCRC[v] %d: " % i) + str(trackResult.ARDBCRC[v])
             status = 'rip NOT accurate'
 
             if trackResult.accurip[v]:

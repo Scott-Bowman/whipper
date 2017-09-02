@@ -65,13 +65,15 @@ class TrackResult:
     copyduration = 0.0
     testcrc = None
     copycrc = None
-    accurip = {1: False, 2: False}  # whether it's in the database
-    ARCRC = {1: None, 2: None}
-    ARDBCRC = {1: None, 2: None}
-    ARDBConfidence = {1: None, 2: None}
-    ARDBMaxConfidence = {1: None, 2: None}
 
-    classVersion = 3
+    def __init__(self):
+        self.accurip = {1: False, 2: False}  # whether it's in the database
+        self.ARCRC = {1: None, 2: None}
+        self.ARDBCRC = {1: None, 2: None}
+        self.ARDBConfidence = {1: None, 2: None}
+        self.ARDBMaxConfidence = {1: None, 2: None}
+
+    classVersion = 4
 
 
 class RipResult:
