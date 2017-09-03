@@ -668,7 +668,6 @@ class Program:
             if trackResult.accurip[v]:
                 status = 'rip accurate    '
 
-            # TODO: update for ARv2
             c = "(not found)            "
             ar = ", DB [notfound]"
             if trackResult.ARDBMaxConfidence[v]:
