@@ -617,7 +617,6 @@ class Program:
 
             # match against each response's checksum for this track
             for j, r in enumerate(responses):
-                print ("%08x" % csum) + " == " + str(r.checksums[i])
                 if "%08x" % csum == r.checksums[i]:
                     response = r
                     logger.debug(
